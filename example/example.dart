@@ -1,4 +1,4 @@
-import 'package:units_of_measure_converter/ucum_units.dart';
+import 'package:units_of_measure_converter/units_of_measure_converter.dart';
 
 /// Simple example demonstrating the UCUM units package capabilities.
 void main() {

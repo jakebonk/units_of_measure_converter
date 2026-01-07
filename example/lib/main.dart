@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:units_of_measure_converter/ucum_units.dart';
+import 'package:units_of_measure_converter/units_of_measure_converter.dart';
 
 void main() {
   runApp(const UcumExampleApp());
