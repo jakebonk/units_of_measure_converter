@@ -1,0 +1,24 @@
+name: units_of_measure_converter
+description: A Dart/Flutter implementation of the Unified Code for Units of Measure (UCUM). Provides unit validation, conversion, and lookup capabilities.
+version: 1.0.0
+homepage: https://github.com/jakebonk/units_of_measure_converter
+repository: https://github.com/jakebonk/units_of_measure_converter
+issue_tracker: https://github.com/jakebonk/units_of_measure_converter/issues
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  collection: ^1.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  assets:
+    - assets/ucum_definitions.json
