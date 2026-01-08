@@ -15,6 +15,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'meter',
+      pluralName: 'meters',
       code: 'm',
       ciCode: 'M',
       property: 'length',
@@ -29,6 +30,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'second',
+      pluralName: 'seconds',
       code: 's',
       ciCode: 'S',
       property: 'time',
@@ -43,6 +45,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'gram',
+      pluralName: 'grams',
       code: 'g',
       ciCode: 'G',
       property: 'mass',
@@ -57,6 +60,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'radian',
+      pluralName: 'radians',
       code: 'rad',
       ciCode: 'RAD',
       property: 'plane angle',
@@ -71,6 +75,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'Kelvin',
+      pluralName: 'kelvins',
       code: 'K',
       ciCode: 'K',
       property: 'temperature',
@@ -85,6 +90,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'coulomb',
+      pluralName: 'coulombs',
       code: 'C',
       ciCode: 'C',
       property: 'electric charge',
@@ -99,6 +105,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: true,
       name: 'candela',
+      pluralName: 'candelas',
       code: 'cd',
       ciCode: 'CD',
       property: 'luminous intensity',
@@ -143,6 +150,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Angstrom',
+      pluralName: 'angstroms',
       code: 'Ao',
       ciCode: 'AO',
       property: 'length',
@@ -156,6 +164,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'inch',
+      pluralName: 'inches',
       code: '[in_i]',
       ciCode: '[IN_I]',
       property: 'length',
@@ -169,6 +178,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'foot',
+      pluralName: 'feet',
       code: '[ft_i]',
       ciCode: '[FT_I]',
       property: 'length',
@@ -182,6 +192,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'yard',
+      pluralName: 'yards',
       code: '[yd_i]',
       ciCode: '[YD_I]',
       property: 'length',
@@ -195,6 +206,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'mile',
+      pluralName: 'miles',
       code: '[mi_i]',
       ciCode: '[MI_I]',
       property: 'length',
@@ -208,6 +220,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'nautical mile',
+      pluralName: 'nautical miles',
       code: '[nmi_i]',
       ciCode: '[NMI_I]',
       property: 'length',
@@ -223,6 +236,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'minute',
+      pluralName: 'minutes',
       code: 'min',
       ciCode: 'MIN',
       property: 'time',
@@ -236,6 +250,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'hour',
+      pluralName: 'hours',
       code: 'h',
       ciCode: 'HR',
       property: 'time',
@@ -249,6 +264,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'day',
+      pluralName: 'days',
       code: 'd',
       ciCode: 'D',
       property: 'time',
@@ -262,6 +278,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'week',
+      pluralName: 'weeks',
       code: 'wk',
       ciCode: 'WK',
       property: 'time',
@@ -275,6 +292,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'month',
+      pluralName: 'months',
       code: 'mo',
       ciCode: 'MO',
       property: 'time',
@@ -288,6 +306,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'year',
+      pluralName: 'years',
       code: 'a',
       ciCode: 'ANN',
       property: 'time',
@@ -303,6 +322,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'pound',
+      pluralName: 'pounds',
       code: '[lb_av]',
       ciCode: '[LB_AV]',
       property: 'mass',
@@ -316,6 +336,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'ounce',
+      pluralName: 'ounces',
       code: '[oz_av]',
       ciCode: '[OZ_AV]',
       property: 'mass',
@@ -329,6 +350,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'metric ton',
+      pluralName: 'metric tons',
       code: 't',
       ciCode: 'TNE',
       property: 'mass',
@@ -342,6 +364,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'grain',
+      pluralName: 'grains',
       code: '[gr]',
       ciCode: '[GR]',
       property: 'mass',
@@ -355,6 +378,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'stone',
+      pluralName: 'stones',
       code: '[stone_av]',
       ciCode: '[STONE_AV]',
       property: 'mass',
@@ -370,6 +394,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'are',
+      pluralName: 'ares',
       code: 'ar',
       ciCode: 'AR',
       property: 'area',
@@ -383,6 +408,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'acre',
+      pluralName: 'acres',
       code: '[acr_us]',
       ciCode: '[ACR_US]',
       property: 'area',
@@ -398,6 +424,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'liter',
+      pluralName: 'liters',
       code: 'L',
       ciCode: 'L',
       property: 'volume',
@@ -411,6 +438,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'gallon',
+      pluralName: 'gallons',
       code: '[gal_us]',
       ciCode: '[GAL_US]',
       property: 'volume',
@@ -424,6 +452,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'quart',
+      pluralName: 'quarts',
       code: '[qt_us]',
       ciCode: '[QT_US]',
       property: 'volume',
@@ -437,6 +466,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'pint',
+      pluralName: 'pints',
       code: '[pt_us]',
       ciCode: '[PT_US]',
       property: 'volume',
@@ -450,6 +480,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'fluid ounce',
+      pluralName: 'fluid ounces',
       code: '[foz_us]',
       ciCode: '[FOZ_US]',
       property: 'volume',
@@ -463,6 +494,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'tablespoon',
+      pluralName: 'tablespoons',
       code: '[tbs_us]',
       ciCode: '[TBS_US]',
       property: 'volume',
@@ -476,6 +508,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'teaspoon',
+      pluralName: 'teaspoons',
       code: '[tsp_us]',
       ciCode: '[TSP_US]',
       property: 'volume',
@@ -489,6 +522,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'cup',
+      pluralName: 'cups',
       code: '[cup_us]',
       ciCode: '[CUP_US]',
       property: 'volume',
@@ -504,6 +538,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'knot',
+      pluralName: 'knots',
       code: '[kn_i]',
       ciCode: '[KN_I]',
       property: 'velocity',
@@ -519,6 +554,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Newton',
+      pluralName: 'newtons',
       code: 'N',
       ciCode: 'N',
       property: 'force',
@@ -545,6 +581,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'dyne',
+      pluralName: 'dynes',
       code: 'dyn',
       ciCode: 'DYN',
       property: 'force',
@@ -560,6 +597,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Joule',
+      pluralName: 'joules',
       code: 'J',
       ciCode: 'J',
       property: 'energy',
@@ -573,6 +611,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'calorie',
+      pluralName: 'calories',
       code: 'cal',
       ciCode: 'CAL',
       property: 'energy',
@@ -586,6 +625,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'electronvolt',
+      pluralName: 'electronvolts',
       code: 'eV',
       ciCode: 'EV',
       property: 'energy',
@@ -614,6 +654,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Watt',
+      pluralName: 'watts',
       code: 'W',
       ciCode: 'W',
       property: 'power',
@@ -642,6 +683,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Pascal',
+      pluralName: 'pascals',
       code: 'Pa',
       ciCode: 'PAL',
       property: 'pressure',
@@ -655,6 +697,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'bar',
+      pluralName: 'bars',
       code: 'bar',
       ciCode: 'BAR',
       property: 'pressure',
@@ -668,6 +711,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'atmosphere',
+      pluralName: 'atmospheres',
       code: 'atm',
       ciCode: 'ATM',
       property: 'pressure',
@@ -681,6 +725,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'millimeter of mercury',
+      pluralName: 'millimeters of mercury',
       code: 'mm[Hg]',
       ciCode: 'MM[HG]',
       property: 'pressure',
@@ -725,6 +770,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'degree',
+      pluralName: 'degrees',
       code: 'deg',
       ciCode: 'DEG',
       property: 'plane angle',
@@ -738,6 +784,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'arc minute',
+      pluralName: 'arc minutes',
       code: "'",
       ciCode: "'",
       property: 'plane angle',
@@ -751,6 +798,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'arc second',
+      pluralName: 'arc seconds',
       code: "''",
       ciCode: "''",
       property: 'plane angle',
@@ -766,6 +814,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Ampere',
+      pluralName: 'amperes',
       code: 'A',
       ciCode: 'A',
       property: 'electric current',
@@ -779,6 +828,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Volt',
+      pluralName: 'volts',
       code: 'V',
       ciCode: 'V',
       property: 'electric potential',
@@ -792,6 +842,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Ohm',
+      pluralName: 'ohms',
       code: 'Ohm',
       ciCode: 'OHM',
       property: 'electric resistance',
@@ -805,6 +856,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Farad',
+      pluralName: 'farads',
       code: 'F',
       ciCode: 'F',
       property: 'electric capacitance',
@@ -818,6 +870,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Henry',
+      pluralName: 'henries',
       code: 'H',
       ciCode: 'H',
       property: 'inductance',
@@ -844,6 +897,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Weber',
+      pluralName: 'webers',
       code: 'Wb',
       ciCode: 'WB',
       property: 'magnetic flux',
@@ -857,6 +911,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Tesla',
+      pluralName: 'teslas',
       code: 'T',
       ciCode: 'T',
       property: 'magnetic flux density',
@@ -872,6 +927,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'lumen',
+      pluralName: 'lumens',
       code: 'lm',
       ciCode: 'LM',
       property: 'luminous flux',
@@ -900,6 +956,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'mole',
+      pluralName: 'moles',
       code: 'mol',
       ciCode: 'MOL',
       property: 'amount of substance',
@@ -916,6 +973,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'bit',
+      pluralName: 'bits',
       code: 'bit',
       ciCode: 'BIT',
       property: 'information',
@@ -929,6 +987,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'byte',
+      pluralName: 'bytes',
       code: 'By',
       ciCode: 'BY',
       property: 'information',
@@ -944,6 +1003,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'international unit',
+      pluralName: 'international units',
       code: '[iU]',
       ciCode: '[IU]',
       property: 'arbitrary',
@@ -973,6 +1033,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'osmole',
+      pluralName: 'osmoles',
       code: 'osm',
       ciCode: 'OSM',
       property: 'amount of substance',
@@ -1021,6 +1082,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Becquerel',
+      pluralName: 'becquerels',
       code: 'Bq',
       ciCode: 'BQ',
       property: 'radioactivity',
@@ -1034,6 +1096,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Curie',
+      pluralName: 'curies',
       code: 'Ci',
       ciCode: 'CI',
       property: 'radioactivity',
@@ -1047,6 +1110,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Gray',
+      pluralName: 'grays',
       code: 'Gy',
       ciCode: 'GY',
       property: 'absorbed dose',
@@ -1060,6 +1124,7 @@ class UcumDefinitions {
     const UcumUnit(
       isBase: false,
       name: 'Sievert',
+      pluralName: 'sieverts',
       code: 'Sv',
       ciCode: 'SV',
       property: 'dose equivalent',

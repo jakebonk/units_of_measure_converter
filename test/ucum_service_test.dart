@@ -175,6 +175,30 @@ void main() {
       expect(parsed.prefix?.code, equals('k'));
     });
 
+    test('parses simple unit to plural name', () {
+      final parsed = ucum.parseUnit('kg');
+      expect(parsed.isValid, isTrue);
+      expect(parsed.getName(plural: true), equals('kilograms'));
+    });
+
+    test('parses simple unit to plural name', () {
+      final parsed = ucum.parseUnit('[lb_av]');
+      expect(parsed.isValid, isTrue);
+      expect(parsed.getName(plural: true), equals('pounds'));
+    });
+
+    test('parses simple unit to plural name', () {
+      final parsed = ucum.parseUnit('[ft_i]');
+      expect(parsed.isValid, isTrue);
+      expect(parsed.getName(plural: true), equals('feet'));
+    });
+
+    test('parses simple unit to plural name', () {
+      final parsed = ucum.parseUnit('[ft_i]');
+      expect(parsed.isValid, isTrue);
+      expect(parsed.getName(plural: false), equals('foot'));
+    });
+
     test('parses compound unit', () {
       final parsed = ucum.parseUnit('m/s');
       expect(parsed.isValid, isTrue);

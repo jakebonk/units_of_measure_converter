@@ -24,6 +24,9 @@ class UcumUnit {
   /// Full name of the unit (e.g., 'meter', 'kilogram')
   final String name;
 
+  /// Plural form of the unit name (e.g., 'meters', 'kilograms')
+  final String? pluralName;
+
   /// Case-sensitive UCUM code (e.g., 'm', 'kg')
   final String code;
 
@@ -84,6 +87,7 @@ class UcumUnit {
   const UcumUnit({
     required this.isBase,
     required this.name,
+    this.pluralName,
     required this.code,
     required this.ciCode,
     required this.property,
@@ -107,9 +111,13 @@ class UcumUnit {
 
   /// Creates a unit from JSON data
   factory UcumUnit.fromJson(Map<String, dynamic> json) {
+    final synonyms =
+        (json['synonyms'] as List?)?.cast<String>() ?? const <String>[];
+    final name = json['name'] as String;
     return UcumUnit(
       isBase: json['isBase'] as bool? ?? false,
-      name: json['name'] as String,
+      name: name,
+      pluralName: json['pluralName'] as String? ?? _extractPluralName(name, synonyms),
       code: json['code'] as String,
       ciCode: json['ciCode'] as String? ?? json['code'] as String,
       property: json['property'] as String? ?? '',
@@ -125,7 +133,7 @@ class UcumUnit {
       isArbitrary: json['isArbitrary'] as bool? ?? false,
       conversionFunction: json['cnv'] as String?,
       conversionPrefix: (json['cnvPfx'] as num?)?.toDouble(),
-      synonyms: (json['synonyms'] as List?)?.cast<String>() ?? const [],
+      synonyms: synonyms,
       source: json['source'] as String?,
       loincProperty: json['loincProperty'] as String?,
       category: _parseCategory(json['category'] as String?),
@@ -133,6 +141,29 @@ class UcumUnit {
       definitionUnit: json['csUnitString'] as String?,
       definitionFactor: (json['baseFactor'] as num?)?.toDouble(),
     );
+  }
+
+  /// Extracts the plural name from synonyms if available.
+  /// Looks for a synonym that ends with 's' and starts with the same letters as the name.
+  static String? _extractPluralName(String name, List<String> synonyms) {
+    if (synonyms.isEmpty) return null;
+    final nameLower = name.toLowerCase();
+    // Look for a synonym that is the plural form of the name
+    for (final synonym in synonyms) {
+      final synLower = synonym.toLowerCase();
+      // Check if synonym ends with 's' and the name (without trailing 's') matches
+      if (synLower.endsWith('s') && synLower != nameLower) {
+        // Check if it's a simple plural (name + 's') or (name + 'es')
+        if (synLower == '${nameLower}s' || synLower == '${nameLower}es') {
+          return synonym;
+        }
+        // Check for irregular plurals where the synonym starts similarly
+        if (synLower.startsWith(nameLower.substring(0, (nameLower.length * 0.6).floor()))) {
+          return synonym;
+        }
+      }
+    }
+    return null;
   }
 
   static UnitCategory? _parseCategory(String? category) {
@@ -154,6 +185,7 @@ class UcumUnit {
   Map<String, dynamic> toJson() => {
         'isBase': isBase,
         'name': name,
+        if (pluralName != null) 'pluralName': pluralName,
         'code': code,
         'ciCode': ciCode,
         'property': property,
@@ -256,6 +288,23 @@ class ParsedUnit {
     final unitCode = unit?.code ?? '';
     final expStr = exponent == 1 ? '' : exponent.toString();
     return '$prefixCode$unitCode$expStr';
+  }
+
+  /// Returns the full name of the parsed unit.
+  ///
+  /// If [plural] is true, returns the plural form (e.g., 'kilometers').
+  /// If [plural] is false, returns the singular form (e.g., 'kilometer').
+  /// For compound units, returns names joined with spaces.
+  String getName({required bool plural}) {
+    if (components.isNotEmpty) {
+      return components.map((c) => c.getName(plural: plural)).join(' ');
+    }
+    if (unit == null) {
+      return original;
+    }
+    final prefixName = prefix?.name ?? '';
+    final unitName = plural ? (unit!.pluralName ?? unit!.name) : unit!.name;
+    return '$prefixName$unitName';
   }
 
   @override
