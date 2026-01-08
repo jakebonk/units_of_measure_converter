@@ -14,3 +14,7 @@ All notable changes to this project will be documented in this file.
 - Unit parsing for compound expressions (e.g., `mg/dL`, `kg.m/s2`) and annotations.
 - Unit lookup/search (by code, name, and synonyms) and commensurable unit discovery.
 
+## [0.1.1] - 2026-01-08
+
+- Added getName to ParsedUnit with plural option. This is an attempt to parse plural following common standards.
+
