@@ -1,6 +1,6 @@
 name: units_of_measure_converter
 description: A Dart/Flutter implementation of the Unified Code for Units of Measure (UCUM). Provides unit validation, conversion, and lookup capabilities.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/jakebonk/units_of_measure_converter
 repository: https://github.com/jakebonk/units_of_measure_converter
 issue_tracker: https://github.com/jakebonk/units_of_measure_converter/issues
