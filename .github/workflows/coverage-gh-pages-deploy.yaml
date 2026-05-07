@@ -3,7 +3,9 @@ name: Flutter Tests + Coverage
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   pull_request:
 
 permissions:
@@ -11,6 +13,7 @@ permissions:
 
 jobs:
   test-coverage:
+    name: Test Coverage
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +28,7 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Show Flutter/Dart versions
+      - name: Show Flutter and Dart versions
         run: |
           flutter --version
           dart --version
@@ -33,10 +36,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Analyze
+        run: flutter analyze
+
       - name: Run tests with coverage
         run: flutter test --coverage
 
-      - name: Install tools
+      - name: Install coverage tools
         run: |
           sudo apt-get update
           sudo apt-get install -y lcov python3-pip
@@ -48,7 +54,10 @@ jobs:
             'lib/**/*.freezed.dart' \
             'lib/**/*.gr.dart' \
             'lib/generated/**' \
-            -o coverage/lcov.info
+            --ignore-errors unused \
+            -o coverage/lcov.cleaned.info
+
+          mv coverage/lcov.cleaned.info coverage/lcov.info
 
       - name: Generate HTML coverage report
         run: genhtml coverage/lcov.info -o coverage/html
@@ -58,15 +67,17 @@ jobs:
         run: |
           SUMMARY=$(lcov --summary coverage/lcov.info)
           echo "$SUMMARY"
-          PERCENT=$(echo "$SUMMARY" | grep "lines" | sed -E 's/.*: ([0-9]+(\.[0-9]+)?)%.*/\1/')
-          echo "percentage=$PERCENT" >> $GITHUB_OUTPUT
 
-      - name: Generate SVG badge
+          PERCENT=$(echo "$SUMMARY" | grep "lines" | sed -E 's/.*: ([0-9]+(\.[0-9]+)?)%.*/\1/')
+          echo "percentage=$PERCENT" >> "$GITHUB_OUTPUT"
+
+      - name: Generate SVG coverage badge
         env:
           COVERAGE_PERCENT: ${{ steps.coverage.outputs.percentage }}
         run: |
           python3 -m pip install anybadge
           mkdir -p coverage/badges
+
           python3 <<'PY'
           import os
           import anybadge
@@ -74,14 +85,20 @@ jobs:
           coverage = float(os.environ["COVERAGE_PERCENT"])
 
           badge = anybadge.Badge(
-              "coverage",
-              coverage,
-              thresholds={50: "red", 70: "orange", 85: "yellow", 95: "green"},
+              label="coverage",
+              value=coverage,
+              thresholds={
+                  50: "red",
+                  70: "orange",
+                  85: "yellow",
+                  95: "green",
+              },
               value_suffix="%"
           )
 
           badge.write_badge("coverage/badges/coverage.svg", overwrite=True)
-          print(f"Generated badge for {coverage}% coverage")
+
+          print(f"Generated coverage badge: {coverage}%")
           PY
 
       - name: Upload coverage artifacts
@@ -93,7 +110,7 @@ jobs:
             coverage/html
             coverage/badges/coverage.svg
 
-      - name: Save badge into repo
+      - name: Save coverage badge to repo
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
         run: |
           mkdir -p .github/badges
@@ -103,5 +120,10 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add .github/badges/coverage.svg
-          git diff --cached --quiet || git commit -m "chore: update coverage badge [skip ci]"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "Coverage badge did not change."
+          else
+            git commit -m "chore: update coverage badge [skip ci]"
+            git push
+          fi
