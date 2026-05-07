@@ -6,6 +6,9 @@ on:
     branches: [main, master]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   test-coverage:
     runs-on: ubuntu-latest
@@ -13,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -34,8 +39,10 @@ jobs:
       - name: Run tests with coverage
         run: flutter test --coverage
 
-      - name: Install LCOV
-        run: sudo apt-get update && sudo apt-get install -y lcov
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov python3-pip
 
       - name: Remove generated files from coverage
         run: |
@@ -49,6 +56,37 @@ jobs:
       - name: Generate HTML coverage report
         run: genhtml coverage/lcov.info -o coverage/html
 
+      - name: Extract coverage percentage
+        id: coverage
+        run: |
+          SUMMARY=$(lcov --summary coverage/lcov.info)
+          echo "$SUMMARY"
+          PERCENT=$(echo "$SUMMARY" | grep "lines" | sed -E 's/.*: ([0-9]+(\.[0-9]+)?)%.*/\1/')
+          echo "percentage=$PERCENT" >> $GITHUB_OUTPUT
+
+      - name: Generate SVG badge
+        env:
+          COVERAGE_PERCENT: ${{ steps.coverage.outputs.percentage }}
+        run: |
+          python3 -m pip install anybadge
+          mkdir -p coverage/badges
+          python3 <<'PY'
+          import os
+          import anybadge
+
+          coverage = float(os.environ["COVERAGE_PERCENT"])
+
+          badge = anybadge.Badge(
+              "coverage",
+              coverage,
+              thresholds={50: "red", 70: "orange", 85: "yellow", 95: "green"},
+              value_suffix="%"
+          )
+
+          badge.write_badge("coverage/badges/coverage.svg", overwrite=True)
+          print(f"Generated badge for {coverage}% coverage")
+          PY
+
       - name: Upload coverage artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -56,3 +94,17 @@ jobs:
           path: |
             coverage/lcov.info
             coverage/html
+            coverage/badges/coverage.svg
+
+      - name: Save badge into repo
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+        run: |
+          mkdir -p .github/badges
+          cp coverage/badges/coverage.svg .github/badges/coverage.svg
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add .github/badges/coverage.svg
+          git diff --cached --quiet || git commit -m "chore: update coverage badge [skip ci]"
+          git push
