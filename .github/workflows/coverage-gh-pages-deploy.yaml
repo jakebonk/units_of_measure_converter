@@ -111,7 +111,7 @@ jobs:
             coverage/badges/coverage.svg
 
       - name: Save coverage badge to repo
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+        if: github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master') && github.actor != 'github-actions[bot]'
         run: |
           mkdir -p .github/badges
           cp coverage/badges/coverage.svg .github/badges/coverage.svg
@@ -125,5 +125,5 @@ jobs:
             echo "Coverage badge did not change."
           else
             git commit -m "chore: update coverage badge [skip ci]"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           fi
