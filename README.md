@@ -1,4 +1,4 @@
-![Coverage](https://raw.githubusercontent.com/jakebonk/units_of_measure_converter/main/.github/badges/coverage.svg)
+![Coverage](https://raw.githubusercontent.com/jakebonk/units_of_measure_converter/master/.github/badges/coverage.svg)
 # Units of Measure Converter
 
 A Dart/Flutter implementation of the Unified Code for Units of Measure (UCUM). Provides comprehensive support for unit validation, conversion, and lookup following the UCUM specification.
