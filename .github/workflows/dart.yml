@@ -1,42 +1,80 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Dart
+name: Coverage Badge
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  coverage:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
+      - name: Run tests with coverage
+        run: flutter test --coverage
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze
+      - name: Strip generated files from coverage
+        run: |
+          sudo apt-get update && sudo apt-get install -y lcov
+          lcov --remove coverage/lcov.info \
+            '**/*.g.dart' \
+            '**/*.freezed.dart' \
+            '**/generated/**' \
+            '**/*.gr.dart' \
+            -o coverage/lcov.info \
+            --ignore-errors unused
 
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
-      - name: Run tests
-        run: dart test
+      - name: Calculate coverage percentage
+        id: coverage
+        run: |
+          # Extract LH (lines hit) and LF (lines found) from lcov.info
+          LH=$(grep -E "^LH:" coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
+          LF=$(grep -E "^LF:" coverage/lcov.info | awk -F: '{sum += $2} END {print sum}')
+          
+          if [ "$LF" -eq 0 ]; then
+            PERCENT=0
+          else
+            PERCENT=$(awk "BEGIN {printf \"%.1f\", ($LH / $LF) * 100}")
+          fi
+          
+          echo "percent=$PERCENT" >> $GITHUB_OUTPUT
+          echo "Coverage: $PERCENT%"
+
+          # Pick a color based on the percentage
+          PERCENT_INT=${PERCENT%.*}
+          if   [ "$PERCENT_INT" -ge 90 ]; then COLOR="brightgreen"
+          elif [ "$PERCENT_INT" -ge 80 ]; then COLOR="green"
+          elif [ "$PERCENT_INT" -ge 70 ]; then COLOR="yellowgreen"
+          elif [ "$PERCENT_INT" -ge 60 ]; then COLOR="yellow"
+          elif [ "$PERCENT_INT" -ge 50 ]; then COLOR="orange"
+          else COLOR="red"
+          fi
+          echo "color=$COLOR" >> $GITHUB_OUTPUT
+
+      - name: Generate badge SVG
+        run: |
+          mkdir -p .github/badges
+          curl -s "https://img.shields.io/badge/coverage-${{ steps.coverage.outputs.percent }}%25-${{ steps.coverage.outputs.color }}" \
+            -o .github/badges/coverage.svg
+
+      - name: Commit badge
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/badges/coverage.svg
+          if git diff --staged --quiet; then
+            echo "No badge changes"
+          else
+            git commit -m "chore: update coverage badge [skip ci]"
+            git push
+          fi
